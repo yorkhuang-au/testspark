@@ -1,0 +1,83 @@
+version: '3'
+services:
+  spark-scala:
+    image: artifactory.devtools.syd.c1.macquarie.com:9996/yorkhuang/york-spark-scala:ubuntu-2.4.8-2.7
+    container_name: myprj1-spark-scala
+    # networks:
+    #   - my_awesome_network
+    # network_mode: bridge
+    ports:
+      - "4040:4040"
+      - "4041:4041"
+      - "4042:4042"
+      - "4043:4043"
+    tty: true
+    command: /bin/bash
+    volumes:
+      - "C:/Users/yhuang4/myprj1/workspace:/home/york/workspace:cached"
+    user: "york"
+
+  localstack:
+    image: artifactory.devtools.syd.c1.macquarie.com:9996/localstack/localstack
+    container_name: myprj1-localstack
+    # networks:
+    #   - my_awesome_network
+    # # network_mode: bridge
+    ports:
+      - "127.0.0.1:53:53"
+      - "127.0.0.1:53:53/udp"
+      - "127.0.0.1:443:443"
+      - "127.0.0.1:4566:4566"
+      - "127.0.0.1:4571:4571"
+    environment:
+      - SERVICES=s3
+      # - DEBUG=${DEBUG- }
+      # - DATA_DIR=${DATA_DIR- }
+      # - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR- }
+      # - LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY- }
+      # - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      # - HOST_TMP_FOLDER=${TMPDIR}
+    volumes:
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  impala:
+    image: artifactory.devtools.syd.c1.macquarie.com:9996/apache/kudu:impala-latest
+    container_name: myprj1-impala
+    # networks:
+    #   - my_awesome_network
+    # # network_mode: bridge
+    ports:
+      - "21000:21000"
+      - "21050:21050"
+      - "25000:25000"
+      - "25010:25010"
+      - "25020:25020"
+    deploy:
+      resources:
+        limits:
+          memory: 5G
+        reservations:
+          memory: 4G
+    command: ["impala"]
+
+  hue:
+    image: artifactory.devtools.syd.c1.macquarie.com:9996/gethue/hue:latest
+    container_name: myprj1-hue
+    # networks:
+    #   - my_awesome_network
+    # # network_mode: bridge
+    ports:
+      - "8888:8888"
+
+    # docker run -it -d --name hue -p 8888:8888 artifactory.devtools.syd.c1.macquarie.com:9996/gethue/hue:latest
+      # docker run --rm -d --name kudu-impala -p :21000 -p :21050 -p :25000 -p :25010 -p 25020: --memory=4096m artifactory.devtools.syd.c1.macquarie.com:9996/apache/kudu:impala-latest impala
+
+
+  # networks:
+  #   my_awesome_network:  
+
+
+
+    

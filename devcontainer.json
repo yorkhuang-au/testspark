@@ -1,0 +1,16 @@
+{
+    "name": "myprj1",
+    "dockerComposeFile": "./docker-compose.yml",
+    "service": "spark-scala",
+    "workspaceFolder": "/home/york/workspace",
+    "shutdownAction": "stopCompose",
+    // "postCreateCommand": "/home/york/scripts/install-dev-tool.sh",
+    // "postStartCommand": "/app/.bash/setup.sh",
+    "remoteUser": "york",
+    "settings": {  "terminal.integrated.profiles.linux": {
+      "bash (login)": {
+        "path": "bash",
+        "args": ["-l"]
+      }
+    }}
+  }
