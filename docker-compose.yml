@@ -1,7 +1,7 @@
 version: '3'
 services:
   spark-scala:
-    image: artifactory.devtools.syd.c1.macquarie.com:9996/yorkhuang/york-spark-scala:ubuntu-2.4.8-2.7
+    image: artifactory.devtools.syd.c1.macquarie.com:9996/yorkhuang/york-spark-scala:ubuntu-3.0.2-3.2-sc
     container_name: myprj1-spark-scala
     # networks:
     #   - my_awesome_network
